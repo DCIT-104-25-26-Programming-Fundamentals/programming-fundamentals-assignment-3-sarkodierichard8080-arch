@@ -75,3 +75,101 @@
 // =============================================================================
 
 
+const readlineSync = require('readline-sync');
+
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function divide(a, b) {
+  if (b === 0) {
+    return null;
+  }
+  return a / b;
+}
+
+function modulus(a, b) {
+  if (b === 0) {
+    return null;
+  }
+  return a % b;
+}
+
+function exponentiate(a, b) {
+  return a ** b;
+}
+
+function printMenu() {
+  console.log('============================');
+  console.log('     SIMPLE CALCULATOR');
+  console.log('============================');
+  console.log('1. Addition');
+  console.log('2. Subtraction');
+  console.log('3. Multiplication');
+  console.log('4. Division');
+  console.log('5. Modulus');
+  console.log('6. Exponentiation');
+  console.log('7. Quit');
+}
+
+function performOperation(symbol, operation) {
+  const a = readlineSync.questionFloat('Enter first number : ');
+  const b = readlineSync.questionFloat('Enter second number: ');
+
+  const result = operation(a, b);
+
+  if (result === null) {
+    console.log('Error: Cannot divide by zero.');
+    return;
+  }
+
+  console.log(`Result: ${a} ${symbol} ${b} = ${result.toFixed(2)}`);
+}
+
+function main() {
+  let running = true;
+
+  while (running) {
+    printMenu();
+    const choice = readlineSync.questionInt('Select an operation (1-7): ');
+
+    switch (choice) {
+      case 1:
+        performOperation('+', add);
+        break;
+      case 2:
+        performOperation('-', subtract);
+        break;
+      case 3:
+        performOperation('*', multiply);
+        break;
+      case 4:
+        performOperation('/', divide);
+        break;
+      case 5:
+        performOperation('%', modulus);
+        break;
+      case 6:
+        performOperation('**', exponentiate);
+        break;
+      case 7:
+        console.log('Goodbye!');
+        running = false;
+        break;
+      default:
+        console.log('Error: Please enter a number between 1 and 7.');
+    }
+
+    console.log('');
+  }
+}
+
+main();
